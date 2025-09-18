@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quickbite-by-manav-landing-page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, #FFF8F0, #FFDDC1); /* Initial linear gradient */
+            overflow-x: hidden; /* Prevent horizontal scrollbar due to large off-screen circle */
+            overflow-y: hidden; /* Prevent vertical scrollbar */
+            transition: background 0.5s ease-in-out; /* Smooth transition for background property */
+            height: 100vh; /* Ensure body takes full viewport height */
+        }
+        .btn-primary {
+            background-color: #FF7B00; /* Orange button color */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #E06A00; /* Darker orange on hover */
+        }
+        .btn-secondary {
+            color: #FF7B00; /* Orange text color for sign in */
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            color: #E06A00; /* Darker orange on hover */
+        }
+        /* New GitHub button style */
+        .btn-github {
+            background-color: #000; /* Black background */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 500;
+            display: flex; /* Use flexbox for icon and text alignment */
+            align-items: center; /* Vertically align icon and text */
+            gap: 8px; /* Space between icon and text */
+            transition: background-color 0.3s ease;
+        }
+        .btn-github:hover {
+            background-color: #333; /* Slightly lighter black on hover */
+        }
+
+        .nav-link {
+            color: #333; /* Darker text for navigation */
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #FF7B00; /* Orange on hover */
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: #FF7B00;
+            border-radius: 2px;
+        }
+        /* Custom styles for the image to ensure it's a circle and positioned correctly */
+        .images {
+            position: absolute;
+            top: 50%; /* Center vertically */
+            left: 100%; /* Position its center at the very right edge of the viewport */
+            --rotate: 0deg; /* Custom CSS variable for rotation */
+            transform: translate(-50%, -50%) rotate(var(--rotate, 0deg)); 
+            
+            width: 2000px; /* Example large size */
+            height: 2000px; /* Example large size */
+            
+            border-radius: 50%;
+            transition: transform 0.5s ease-in-out; /* Keep for smooth general transforms */
+            /* Removed the outline and outline-offset properties to hide the dotted line */
+            overflow: hidden; /* Ensure only the visible part of images are shown */
+        }
+        .images .item {
+            position: absolute;
+            width: 500px; /* Increased image size */
+            height: 500px; /* Increased image size */
+            
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(calc(60deg * var(--i))) translateY(-350px); 
+            
+            transform-origin: 50% 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .images .item img {
+            height: 100%; /* Make image fill its container */
+            width: 100%;
+            object-fit: contain; /* Maintain aspect ratio */
+            border-radius: 50%; /* Make images circular if they are square */
+            transform: rotate(calc(-60deg * var(--i)));
+        }
+        @media (max-width: 768px) {
+            .images {
+                top: 100%;
+                left: 50%;
+                transform: translate(-50%, -45%) rotate(var(--rotate, 0deg));
+                width: 800px;
+                height: 800px;
+            }
+
+            .images .item {
+                
+                width: 350px;
+                height: 350px;
+                transform: translate(-50%, -50%) rotate(calc(120deg * var(--i))) translateY(-240px);
+            }
+
+            .images .item img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+
+        /* Glassmorphism for header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0; 
+            width: 100%;
+            height: 80px; 
+            z-index: 30;
+            display: flex; /* Still flex to stretch its children */
+            justify-content: center; /* Center the new container */
+            align-items: center;
+            /* Removed padding from here */
+        }
+
+        /* New container for header content */
+        .header-container {
+            display: flex;
+            align-items: center;
+            width: 100%; /* Take full width of parent */
+            padding: 0 1rem; /* Default padding for small screens */
+            max-width: 1280px; /* Example max width, adjust as needed (e.g., corresponds to Tailwind's 'max-w-screen-xl' or '2xl') */
+            /* Default to space-between for mobile: logo-group left, desktop-github hidden, mobile-github right */
+            justify-content: space-between; 
+        }
+
+        /* Responsive padding for the new header-container */
+        @media (min-width: 768px) { /* md breakpoint */
+            .header-container {
+                padding: 0 2rem;
+                justify-content: space-between; /* On medium screens, space out logo group, nav, and desktop github */
+            }
+            .header-nav { /* On medium screens, the nav becomes visible */
+                display: flex;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .header-container {
+                padding: 0 4rem;
+            }
+        }
+
+        /* Style for the logo container */
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Space between logo, Quickbite text, and NOW the mobile GitHub button */
+            /* On small screens, this will be the main container for logo and mobile github */
+        }
+        .logo-container img {
+            height: 50px; /* Adjust logo size as needed */
+            width: auto;
+            max-width: 100%; 
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo-container">
+                    <img src="images/logo.png" alt="Quickbite Logo"> 
+                </div>
+                <div class="header-logo text-2xl font-bold text-gray-800">
+                    Quick<span class="text-orange-500">bite</span>
+                </div>
+                <button class="btn-github md:hidden" type="button">
+                    <i class="fab fa-github"></i> GitHub
+                </button>
+            </div>
+
+            <nav class="header-nav hidden md:flex space-x-4">
+                <a href="#" class="nav-link" data-link="home">Home</a>
+                <a href="#" class="nav-link" data-link="menu">Menu</a>
+                <a href="#" class="nav-link" data-link="service">Service</a>
+                <a href="#" class="nav-link" data-link="about">About Us</a>
+                <a href="#" class="nav-link" data-link="gallery">Gallery</a>
+            </nav>
+
+            <button class="btn-github hidden md:flex" type="button">
+                <i class="fab fa-github"></i> GitHub
+            </button>
+        </div>
+    </header>
+
+    <main class="h-full">
+        <section class="hero-section flex flex-col md:flex-row items-center justify-between relative h-full px-4 md:px-8 lg:px-16" style="padding-top: 80px;">
+            <div class="hero-content md:w-1/2 lg:w-2/5 text-center md:text-left z-20">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 mb-6">
+                    Find Your <br> Taste!
+                </h1>
+                <p class="text-gray-600 text-lg md:text-xl mb-8 leading-relaxed">
+                    Hi, I’m Manav, a 17-year-old student currently in 12th grade. I’ve created QuickBite, a simple and smart Recipe Finder website where you can discover delicious recipes quickly and <beautifully class="br"></beautifully> Whether you're craving something new or need ideas with ingredients you already have, QuickBite helps you find the perfect dish in no time!
+                </p>
+                <button class="btn-primary text-lg" type="button">let's find it!</button>
+            </div>
+
+            <div class="images">
+                <div class="item" style="--i: 1">
+                    <img src="https://i.ibb.co/kV1r2kyt/delicious-chicken-biryani-aromatic-rice-tender-chicken.png" alt="image1">
+                </div>
+                
+                <div class="item"style="--i: 3">
+                    <img src="images/img1.png" alt="image2">
+                </div>
+                
+                <div class="item"style="--i: 5">
+                    <img src="images/img2.png" alt="image3">
+                </div>
+                
+                <div class="item"style="--i: 7">
+                    <img src="images/img4.png" alt="image5">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Get all navigation links
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Function to handle nav link clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent default anchor behavior
+
+                // Remove 'active' class from all links
+                navLinks.forEach(item => item.classList.remove('active'));
+
+                // Add 'active' class to the clicked link
+                this.classList.add('active');
+
+                console.log(`Nav link clicked: ${this.textContent}`);
+                // In a real scenario, you would update content or scroll to a section here.
+            });
+        });
+
+        // Set 'Home' as active initially
+        document.querySelector('.nav-link[data-link="home"]').classList.add('active');
+
+        // Make buttons clickable (for demonstration)
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log(`Button clicked: ${this.textContent}`);
+                // Add your desired functionality here for each button
+                if (this.textContent.includes('Sign In')) { // Use .includes for robustness with icon
+                    console.log('Sign In button clicked!');
+                } else if (this.textContent.includes('Sign Up')) { // Use .includes for robustness with icon
+                    console.log('Sign Up button clicked!');
+                } else if (this.textContent.includes("let's find it!")) { 
+                    console.log("Let's find it! button clicked!");
+                } else if (this.textContent.includes("GitHub")) {
+                    console.log("GitHub button clicked!");
+                    // Example: Redirect to a GitHub profile/repo
+                    window.open("https://github.com/your-github-profile", "_blank"); 
+                }
+            });
+        });
+        
+        // Image rotation script with stop-and-go behavior
+        const imagesContainer = document.querySelector('.images');
+        const body = document.body; // Get the body element
+        let currentRotation = 0; // The actual current rotation of the container
+        let targetRotation = 0; // The next target rotation for the container
+        let animationFrameId;
+        let startTime = null;
+        const animationDuration = 3000; // 3 seconds for rotation
+        const pauseDuration = 3000;     // 3 seconds for pause
+
+        // Define rotation sequences for mobile and desktop
+        const rotationSequenceMobile = [0, -120, -240]; // Example angles for mobile
+        const rotationSequenceDesktop = [-35, -150, -270]; // Example angles for desktop
+
+        let rotationSequence; // This will hold the active rotation sequence
+
+        function setRotationSequence() {
+            const isMobile = window.innerWidth <= 768;
+            rotationSequence = isMobile ? rotationSequenceMobile : rotationSequenceDesktop;
+        }
+
+        // Set initial rotation sequence
+        setRotationSequence();
+
+        // Listen for window resize to update rotation sequence
+        window.addEventListener('resize', setRotationSequence);
+
+
+        // Define an array of linear gradient background colors to cycle through
+        const backgroundGradients = [
+            'linear-gradient(to right, #FFF8F0, #FFDDC1)', // Light orange to warmer orange
+            'linear-gradient(to right, #F0FFF8, #C1FFDD)', // Light green to mint green
+            'linear-gradient(to right, #F8F0FF, #DDC1FF)', // Light purple to lavender
+            'linear-gradient(to right, #FFF0F8, #FFC1DD)'  // Light pink to rose
+        ];
+        let currentSequenceIndex = 0;
+
+        function startRotationCycle() {
+            // Ensure rotationSequence is set before accessing it
+            if (!rotationSequence || rotationSequence.length === 0) {
+                setRotationSequence(); // Fallback in case it wasn't set initially
+            }
+            targetRotation = rotationSequence[currentSequenceIndex % rotationSequence.length];
+
+            // Change body background to the next linear gradient
+            body.style.background = backgroundGradients[currentSequenceIndex % backgroundGradients.length];
+
+            startTime = performance.now(); // Reset start time for smooth animation
+            animateRotation();
+        }
+
+        function animateRotation(currentTime) {
+            if (!startTime) startTime = currentTime;
+            
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / animationDuration, 1); // Progress from 0 to 1
+
+            const interpolatedRotation = currentRotation + (targetRotation - currentRotation) * progress;
+            imagesContainer.style.setProperty('--rotate', `${interpolatedRotation}deg`);
+
+            if (progress < 1) {
+                // Continue animation
+                animationFrameId = requestAnimationFrame(animateRotation);
+            } else {
+                // Animation segment finished, snap to target and pause
+                currentRotation = targetRotation; // Ensure it snaps exactly
+                imagesContainer.style.setProperty('--rotate', `${currentRotation}deg`);
+
+                currentSequenceIndex++; // Move to the next image in the sequence
+
+                // Pause for 'pauseDuration', then start the next rotation cycle
+                setTimeout(() => {
+                    startTime = null; // Reset startTime for the next animation segment
+                    startRotationCycle();
+                }, pauseDuration);
+            }
+        }
+
+        // Initialize the first rotation cycle when the page loads
+        startRotationCycle();
+    </script>
+</body>
+</html>
