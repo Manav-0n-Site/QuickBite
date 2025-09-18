@@ -1,3 +1,10 @@
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+
+
+
 # 🍽️ QuickBite - landing-Page  
 
 Welcome to **QuickBite**, a simple yet beautiful landing page created to showcase a smart **Recipe Finder Website**.  
@@ -27,7 +34,7 @@ Whether you’re craving something new or want to try something with ingredients
 ## 🖼️ Preview  
 
 > 🚀 **Live Demo (Optional)**  
-> [Click Here to View](https://your-live-demo-link.com) *(Add your GitHub Pages/Netlify link here)*  
+> [Click Here to View](https://manav-0n-site.github.io/QuickBite/) *(Add your GitHub Pages/Netlify link here)*  
 
 ![QuickBite Screenshot](images/logo.png)
 
